@@ -3,6 +3,8 @@ from src.core.detector import DatasetDetector
 from src.core.logger import get_logger
 
 from src.processors import PROCESSOR_REGISTRY
+from src.classifiers import ClassifierFactory
+from src.exporters import ExcelExporter
 
 from config import INPUT_DIR
 
@@ -21,6 +23,9 @@ class Pipeline:
             return
 
         total_leads = 0
+        all_leads = []
+
+        classifier = ClassifierFactory.create()
 
         for file in json_files:
 
@@ -43,7 +48,11 @@ class Pipeline:
             # Processor now returns ProcessorResult
             result = processor.process(data)
 
+            for lead in result.leads:
+                classifier.classify(lead)
+
             total_leads += len(result.leads)
+            all_leads.extend(result.leads)
 
             logger.info(
                 f"Parsed {result.stats.parsed} leads "
@@ -58,7 +67,15 @@ class Pipeline:
                     f"Sample Lead -> "
                     f"Name={sample.name}, "
                     f"Phone={sample.phone}, "
-                    f"Interactions={len(sample.interactions)}"
+                    f"Interactions={len(sample.interactions)}, "
+                    f"Status={sample.classification.status.value}"
                 )
 
         logger.info(f"Total Parsed Leads : {total_leads}")
+
+        if all_leads:
+            exporter = ExcelExporter()
+            written = exporter.export(all_leads)
+
+            for path in written:
+                logger.info(f"Exported {path.name}")

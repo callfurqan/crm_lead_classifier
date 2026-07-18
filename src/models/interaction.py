@@ -22,6 +22,8 @@ class Interaction:
     sender: str = ""
 
     receiver: str = ""
+    
+    subject: str = ""
 
     content: str = ""
 

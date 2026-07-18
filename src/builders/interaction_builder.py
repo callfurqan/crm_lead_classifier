@@ -17,6 +17,7 @@ class InteractionBuilder:
         receiver="",
         timestamp=None,
         content="",
+        subject="",
         metadata=None,
     ) -> Interaction:
 
@@ -33,5 +34,6 @@ class InteractionBuilder:
             sender=TextUtils.clean(sender),
             receiver=TextUtils.clean(receiver),
             content=TextUtils.clean(content),
+            subject=TextUtils.clean(subject),
             metadata=metadata or {},
         )

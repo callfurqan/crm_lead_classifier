@@ -36,3 +36,16 @@ class Lead:
     classification: Classification = field(default_factory=Classification)
 
     metadata: dict = field(default_factory=dict)
+
+    @property
+    def conversation_text(self) -> str:
+        """Combined text from all interactions for classification."""
+        parts = []
+
+        for interaction in self.interactions:
+            if interaction.subject:
+                parts.append(interaction.subject)
+            if interaction.content:
+                parts.append(interaction.content)
+
+        return "\n".join(parts)

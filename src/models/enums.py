@@ -22,6 +22,8 @@ class ClassificationStatus(Enum):
     UNKNOWN = "unknown"
     INTERESTED = "interested"
     NON_INTERESTED = "non_interested"
+    CALLBACK = "callback"
+    WRONG_NUMBER = "wrong_number"
 
 
 class InterestLevel(Enum):
