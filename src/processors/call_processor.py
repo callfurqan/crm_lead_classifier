@@ -1,6 +1,7 @@
 from src.models.lead import Lead
 from .base_processor import BaseProcessor
-
+from src.core.processor_result import ProcessorResult
+from src.core.parser_statistics import ParserStatistics
 
 class CallProcessor(BaseProcessor):
 
@@ -11,4 +12,8 @@ class CallProcessor(BaseProcessor):
 
         leads: list[Lead] = []
 
-        return leads
+        
+        return ProcessorResult(
+                leads=[],
+                stats=ParserStatistics(),
+            )

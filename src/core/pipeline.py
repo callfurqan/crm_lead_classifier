@@ -40,10 +40,25 @@ class Pipeline:
 
             processor = processor_cls()
 
-            leads = processor.process(data)
+            # Processor now returns ProcessorResult
+            result = processor.process(data)
 
-            total_leads += len(leads)
+            total_leads += len(result.leads)
 
-            logger.info(f"Parsed {len(leads)} leads")
+            logger.info(
+                f"Parsed {result.stats.parsed} leads "
+                f"(Skipped={result.stats.skipped}, "
+                f"Errors={result.stats.errors})"
+            )
+
+            if result.leads:
+                sample = result.leads[0]
+
+                logger.info(
+                    f"Sample Lead -> "
+                    f"Name={sample.name}, "
+                    f"Phone={sample.phone}, "
+                    f"Interactions={len(sample.interactions)}"
+                )
 
         logger.info(f"Total Parsed Leads : {total_leads}")

@@ -1,23 +1,28 @@
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, Any
 
-from .enums import InteractionDirection
+from src.models.enums import (
+    InteractionDirection,
+    InteractionSource,
+)
 
 
 @dataclass
 class Interaction:
+    """
+    Represents one communication event.
+    """
 
-    source: str
+    source: InteractionSource
 
     direction: InteractionDirection
 
-    timestamp: datetime | None
+    timestamp: datetime | None = None
 
-    sender: str
+    sender: str = ""
 
-    receiver: str
+    receiver: str = ""
 
-    content: str
+    content: str = ""
 
-    metadata: Dict[str, Any] = field(default_factory=dict)
+    metadata: dict = field(default_factory=dict)

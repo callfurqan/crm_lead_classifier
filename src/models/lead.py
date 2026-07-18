@@ -1,18 +1,21 @@
 from dataclasses import dataclass, field
 
-from .interaction import Interaction
-from .classification import Classification
-from .extracted_info import ExtractedInfo
-
-from .enums import DatasetType
+from src.models.classification import Classification
+from src.models.extracted_info import ExtractedInfo
+from src.models.enums import DatasetType
+from src.models.interaction import Interaction
 
 
 @dataclass
 class Lead:
+    """
+    Normalized CRM Lead.
+    Every processor returns Lead objects.
+    """
 
     lead_id: str
 
-    dataset: DatasetType
+    lead_key: str
 
     name: str = ""
 
@@ -23,6 +26,8 @@ class Lead:
     company: str = ""
 
     assigned_to: str = ""
+
+    datasets: set[DatasetType] = field(default_factory=set)
 
     interactions: list[Interaction] = field(default_factory=list)
 

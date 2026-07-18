@@ -1,25 +1,31 @@
 from enum import Enum
 
 
-class DatasetType(str, Enum):
+class DatasetType(Enum):
     EMAIL = "email"
     SMS = "sms"
     CALL = "call"
 
 
-class InteractionDirection(str, Enum):
+class InteractionDirection(Enum):
     INBOUND = "inbound"
     OUTBOUND = "outbound"
 
 
-class ClassificationStatus(str, Enum):
+class InteractionSource(Enum):
+    SMS = "sms"
+    EMAIL = "email"
+    CALL = "call"
+
+
+class ClassificationStatus(Enum):
+    UNKNOWN = "unknown"
     INTERESTED = "interested"
     NON_INTERESTED = "non_interested"
+
+
+class InterestLevel(Enum):
     UNKNOWN = "unknown"
-
-
-class InterestLevel(str, Enum):
-    HIGH = "high"
-    MEDIUM = "medium"
     LOW = "low"
-    UNKNOWN = "unknown"
+    MEDIUM = "medium"
+    HIGH = "high"
